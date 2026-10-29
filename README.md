@@ -21,20 +21,21 @@ OpenClaw Diagnosis 将日志接入、证据检索、智能体推理与结果发�
 系统由交互层、应用服务层、证据层和智能体推理层组成。API 服务负责业务流程与任务调度；OpenClaw 负责模型与工具之间的执行循环；Evidence 插件连接受限检索接口与持久化数据。
 
 ```mermaid
+%%{init: {"flowchart": {"htmlLabels": false}}}%%
 flowchart TB
-    U[用户] --> W[Web 工作台 · React / Gravity UI]
-    W --> A[API 服务 · Fastify]
-    A --> I[日志接入 · 安全解包与索引]
-    I --> F[(Source 来源文件)]
-    I --> D[(SQLite · Evidence / FTS / 任务 / 结果)]
-    A --> Q[持久化分析队列]
-    Q --> O[分析编排器 · Run 独立会话]
-    O --> C[OpenClaw 运行时]
-    C <--> M[vLLM · 本地 Qwen 模型]
-    C <--> T[diagnosis-evidence 插件]
-    T --> R[来源查询 / 搜索 / 原文读取 / 时间线]
+    U["用户"] --> W["Web 工作台<br/>React / Gravity UI"]
+    W --> A["API 服务<br/>Fastify"]
+    A --> I["日志接入<br/>安全解包与索引"]
+    I --> F[("Source<br/>来源文件")]
+    I --> D[("SQLite 数据库<br/>Evidence / FTS<br/>任务 / 结果")]
+    A --> Q["持久化分析队列"]
+    Q --> O["分析编排器<br/>Run 独立会话"]
+    O --> C["OpenClaw<br/>运行时"]
+    C <--> M["vLLM<br/>本地 Qwen 模型"]
+    C <--> T["Evidence 插件<br/>diagnosis-evidence"]
+    T --> R["来源查询 / 搜索<br/>原文读取 / 时间线"]
     R <--> D
-    T --> P[diagnosis_submit · 结构与来源校验]
+    T --> P["diagnosis_submit<br/>结构与来源校验"]
     P --> D
     D --> A
 ```
